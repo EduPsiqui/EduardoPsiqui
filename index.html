@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eduardo Psiqui - Simples, ágil e confiança</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  * { -webkit-tap-highlight-color: transparent; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  .drawer { transition: transform .3s ease; }
+  .fade-in { animation: fadeIn .2s ease; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .toast-in { animation: slideUp .3s ease; }
+  @keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800 pb-20 md:pb-0">
+
+<!-- TOAST -->
+<div id="toast" class="hidden fixed bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-5 py-3 rounded-full shadow-lg z-[100] text-sm toast-in"></div>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm">
+  <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
+    <div class="flex items-center gap-2">
+      <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="20" fill="#0d9488" opacity="0.15"/>
+        <path d="M24 8C16 8 10 14 10 22c0 5 3 9 7 11v5a2 2 0 002 2h10a2 2 0 002-2v-5c4-2 7-6 7-11 0-8-6-14-14-14z" stroke="#0f766e" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <circle cx="24" cy="21" r="2" fill="#0f766e"/>
+      </svg>
+      <div>
+        <h1 class="font-bold text-teal-800 text-lg leading-none">Eduardo Psiqui</h1>
+        <p class="text-[10px] text-teal-600 leading-none">Simples, ágil e confiança</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="searchBtn" class="p-2 text-gray-600" aria-label="Buscar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button id="cartBtn" class="relative p-2 text-gray-600" aria-label="Carrinho">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        <span id="cartBadge" class="hidden absolute -top-1 -right-1 bg-teal-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">0</span>
+      </button>
+    </div>
+  </div>
+  <!-- Busca -->
+  <div id="searchBar" class="hidden max-w-6xl mx-auto px-4 pb-3">
+    <input id="searchInput" type="text" placeholder="Buscar produto..." class="w-full border border-gray-200 rounded-full px-4 py-2 text-sm outline-none focus:border-teal-500">
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="bg-gradient-to-b from-teal-50 to-transparent px-4 py-6 text-center">
+  <h2 class="text-xl font-bold text-teal-900">Bem-estar natural para sua mente</h2>
+  <p class="text-sm text-gray-600 mt-1">Produtos naturais para ansiedade, sono, humor e foco 🌱</p>
+</section>
+
+<!-- CATEGORIAS -->
+<div class="max-w-6xl mx-auto px-4">
+  <div id="categoryChips" class="flex gap-2 overflow-x-auto pb-3 -mx-1 px-1"></div>
+</div>
+
+<!-- PRODUTOS -->
+<main class="max-w-6xl mx-auto px-4 pb-10">
+  <div id="productGrid" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+</main>
+
+<!-- CONFIANÇA -->
+<section class="bg-white border-t border-gray-100 py-8 px-4">
+  <div class="max-w-6xl mx-auto grid grid-cols-3 gap-4 text-center text-xs text-gray-600">
+    <div>🔒<p class="mt-1">Site Seguro</p></div>
+    <div>✅<p class="mt-1">Dados Protegidos (LGPD)</p></div>
+    <div>💬<p class="mt-1">Atendimento Direto</p></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="bg-teal-800 text-white py-8 px-4 text-center">
+  <h3 class="font-bold text-lg">Fique por dentro das novidades</h3>
+  <form id="newsletterForm" class="mt-3 flex max-w-sm mx-auto gap-2">
+    <input type="email" required placeholder="Seu e-mail" class="flex-1 rounded-full px-4 py-2 text-sm text-gray-800 outline-none">
+    <button class="bg-white text-teal-800 font-semibold rounded-full px-4 py-2 text-sm">Enviar</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-400 text-xs py-8 px-4 text-center">
+  <p class="font-bold text-white mb-1">Eduardo Psiqui</p>
+  <p>contato@eduardopsiqui.com.br</p>
+  <p class="mt-2">&copy; 2026 Eduardo Psiqui. Todos os direitos reservados.</p>
+</footer>
+
+<!-- BOTTOM NAV MOBILE -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around py-2 z-40">
+  <button class="flex flex-col items-center text-teal-700 text-[10px]">🏠<span>Início</span></button>
+  <button id="navSearch" class="flex flex-col items-center text-gray-500 text-[10px]">🔍<span>Buscar</span></button>
+  <button id="navCart" class="flex flex-col items-center text-gray-500 text-[10px]">🛒<span>Carrinho</span></button>
+</nav>
+
+<!-- WHATSAPP FLOAT -->
+<a id="waFloat" target="_blank" class="fixed bottom-24 md:bottom-6 right-4 bg-green-500 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg z-30 text-2xl">💬</a>
+
+<!-- MODAL PRODUTO -->
+<div id="productModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-end md:items-center justify-center">
+  <div class="bg-white w-full md:max-w-md rounded-t-2xl md:rounded-2xl p-5 fade-in">
+    <div class="flex justify-between items-start mb-3">
+      <h3 id="modalName" class="font-bold text-lg text-gray-800"></h3>
+      <button id="modalClose" class="text-gray-400 text-2xl leading-none">&times;</button>
+    </div>
+    <div id="modalEmoji" class="text-5xl text-center mb-3"></div>
+    <p id="modalDesc" class="text-sm text-gray-600 mb-3"></p>
+    <p id="modalPrice" class="text-teal-700 font-bold text-lg mb-4"></p>
+    <div class="flex items-center justify-between mb-4">
+      <span class="text-sm text-gray-600">Quantidade</span>
+      <div class="flex items-center gap-3">
+        <button id="qtyMinus" class="w-8 h-8 rounded-full bg-gray-100 font-bold">-</button>
+        <span id="qtyValue" class="w-6 text-center">1</span>
+        <button id="qtyPlus" class="w-8 h-8 rounded-full bg-gray-100 font-bold">+</button>
+      </div>
+    </div>
+    <button id="addToCartBtn" class="w-full bg-teal-700 text-white font-semibold rounded-full py-3">Adicionar ao carrinho</button>
+  </div>
+</div>
+
+<!-- DRAWER CARRINHO -->
+<div id="cartOverlay" class="hidden fixed inset-0 bg-black/50 z-50"></div>
+<div id="cartDrawer" class="drawer fixed top-0 right-0 h-full w-full md:w-96 bg-white z-50 translate-x-full flex flex-col">
+  <div class="flex justify-between items-center p-4 border-b">
+    <h3 class="font-bold text-lg">Seu Carrinho</h3>
+    <button id="cartClose" class="text-gray-400 text-2xl leading-none">&times;</button>
+  </div>
+  <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+  <div class="p-4 border-t">
+    <div class="flex justify-between font-bold text-lg mb-3">
+      <span>Total</span>
+      <span id="cartTotal">R$ 0,00</span>
+    </div>
+    <button id="checkoutBtn" class="w-full bg-green-600 text-white font-semibold rounded-full py-3">Finalizar via WhatsApp</button>
+  </div>
+</div>
+
+<script>
+// ======= CONFIGURAÇÃO =======
+const WHATSAPP_NUMBER = "5511999999999"; // <-- TROQUE pelo seu número (com DDI+DDD)
+
+// ======= PRODUTOS (catálogo de exemplo — troque quando tiver os reais) =======
+const PRODUCTS = [
+  { id: 1, name: "Chá Calmante Camomila+Lavanda", cat: "sono", price: 29.9, emoji: "🍵", desc: "Blend natural para relaxar antes de dormir." },
+  { id: 2, name: "Óleo Essencial de Lavanda", cat: "ansiedade", price: 39.9, emoji: "🌸", desc: "100% puro, ideal para difusores e massagens." },
+  { id: 3, name: "Cápsulas de Ashwagandha", cat: "ansiedade", price: 54.9, emoji: "💊", desc: "Adaptógeno natural para reduzir estresse." },
+  { id: 4, name: "Kit Mindfulness Iniciante", cat: "humor", price: 89.9, emoji: "🧘", desc: "Guia + acessórios para começar a meditar." },
+  { id: 5, name: "Melatonina Natural 3mg", cat: "sono", price: 44.9, emoji: "🌙", desc: "Auxilia a regular o ciclo do sono." },
+  { id: 6, name: "Suplemento 5-HTP", cat: "humor", price: 64.9, emoji: "☀️", desc: "Apoio natural ao bem-estar e humor." },
+  { id: 7, name: "Chá Detox Anti-Vício", cat: "vicios", price: 34.9, emoji: "🌿", desc: "Blend para apoiar processos de desintoxicação." },
+  { id: 8, name: "Óleo de CBD Fórmula Calma", cat: "ansiedade", price: 129.9, emoji: "💧", desc: "Extrato natural, uso sublingual." },
+  { id: 9, name: "Vela Aromática Relaxante", cat: "sono", price: 24.9, emoji: "🕯️", desc: "Aroma de lavanda e sândalo para o quarto." },
+  { id: 10, name: "Cápsulas de Ginkgo Biloba", cat: "foco", price: 49.9, emoji: "🍃", desc: "Apoio natural à concentração e memória." },
+];
+
+const CATEGORIES = [
+  { id: "todos", label: "Todos" },
+  { id: "ansiedade", label: "Ansiedade" },
+  { id: "sono", label: "Sono" },
+  { id: "humor", label: "Humor" },
+  { id: "vicios", label: "Apoio a Vícios" },
+  { id: "foco", label: "Foco" },
+];
+
+// ======= ESTADO =======
+let cart = JSON.parse(localStorage.getItem("ep_cart") || "[]");
+let currentCategory = "todos";
+let currentSearch = "";
+let modalProduct = null;
+let modalQty = 1;
+
+function money(v) { return "R$ " + v.toFixed(2).replace(".", ","); }
+function saveCart() { localStorage.setItem("ep_cart", JSON.stringify(cart)); }
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.remove("hidden");
+  setTimeout(() => t.classList.add("hidden"), 2200);
+}
+
+// ======= CATEGORIAS =======
+function renderCategoryChips() {
+  const box = document.getElementById("categoryChips");
+  box.innerHTML = CATEGORIES.map(c => `
+    <button data-cat="${c.id}" class="cat-chip whitespace-nowrap px-4 py-1.5 rounded-full text-sm border ${c.id === currentCategory ? "bg-teal-700 text-white border-teal-700" : "bg-white text-gray-600 border-gray-200"}">
+      ${c.label}
+    </button>`).join("");
+  box.querySelectorAll(".cat-chip").forEach(btn => {
+    btn.addEventListener("click", () => { currentCategory = btn.dataset.cat; renderCategoryChips(); renderProducts(); });
+  });
+}
+
+// ======= PRODUTOS =======
+function renderProducts() {
+  const grid = document.getElementById("productGrid");
+  const filtered = PRODUCTS.filter(p =>
+    (currentCategory === "todos" || p.cat === currentCategory) &&
+    p.name.toLowerCase().includes(currentSearch.toLowerCase())
+  );
+  if (filtered.length === 0) {
+    grid.innerHTML = `<p class="col-span-full text-center text-gray-400 py-10 text-sm">Nenhum produto encontrado.</p>`;
+    return;
+  }
+  grid.innerHTML = filtered.map(p => `
+    <div class="bg-white rounded-xl border border-gray-100 p-3 shadow-sm flex flex-col">
+      <div class="text-4xl text-center py-4 bg-teal-50 rounded-lg mb-2 cursor-pointer product-open" data-id="${p.id}">${p.emoji}</div>
+      <p class="text-sm font-semibold text-gray-800 leading-tight product-open cursor-pointer" data-id="${p.id}">${p.name}</p>
+      <p class="text-teal-700 font-bold text-sm mt-1">${money(p.price)}</p>
+      <button data-id="${p.id}" class="quick-add mt-2 bg-teal-700 text-white text-xs font-semibold rounded-full py-2">Adicionar</button>
+    </div>`).join("");
+
+  grid.querySelectorAll(".product-open").forEach(el => el.addEventListener("click", () => openModal(+el.dataset.id)));
+  grid.querySelectorAll(".quick-add").forEach(el => el.addEventListener("click", () => { addToCart(+el.dataset.id, 1); showToast("Adicionado ao carrinho ✅"); }));
+}
+
+// ======= MODAL =======
+function openModal(id) {
+  modalProduct = PRODUCTS.find(p => p.id === id);
+  modalQty = 1;
+  document.getElementById("modalName").textContent = modalProduct.name;
+  document.getElementById("modalEmoji").textContent = modalProduct.emoji;
+  document.getElementById("modalDesc").textContent = modalProduct.desc;
+  document.getElementById("modalPrice").textContent = money(modalProduct.price);
+  document.getElementById("qtyValue").textContent = modalQty;
+  document.getElementById("productModal").classList.remove("hidden");
+}
+document.getElementById("modalClose").addEventListener("click", () => document.getElementById("productModal").classList.add("hidden"));
+document.getElementById("qtyMinus").addEventListener("click", () => { if (modalQty > 1) modalQty--; document.getElementById("qtyValue").textContent = modalQty; });
+document.getElementById("qtyPlus").addEventListener("click", () => { modalQty++; document.getElementById("qtyValue").textContent = modalQty; });
+document.getElementById("addToCartBtn").addEventListener("click", () => {
+  addToCart(modalProduct.id, modalQty);
+  document.getElementById("productModal").classList.add("hidden");
+  showToast("Adicionado ao carrinho ✅");
+});
+
+// ======= CARRINHO =======
+function addToCart(id, qty) {
+  const item = cart.find(i => i.id === id);
+  if (item) item.qty += qty; else cart.push({ id, qty });
+  saveCart(); updateCartBadge();
+}
+function removeFromCart(id) { cart = cart.filter(i => i.id !== id); saveCart(); updateCartBadge(); renderCart(); }
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) return removeFromCart(id);
+  saveCart(); updateCartBadge(); renderCart();
+}
+function updateCartBadge() {
+  const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById("cartBadge");
+  if (totalQty > 0) { badge.textContent = totalQty; badge.classList.remove("hidden"); }
+  else badge.classList.add("hidden");
+}
+function renderCart() {
+  const box = document.getElementById("cartItems");
+  if (cart.length === 0) {
+    box.innerHTML = `<p class="text-center text-gray-400 text-sm py-10">Seu carrinho está vazio.</p>`;
+  } else {
+    box.innerHTML = cart.map(i => {
+      const p = PRODUCTS.find(pr => pr.id === i.id);
+      return `<div class="flex items-center gap-3 border-b border-gray-100 pb-3">
+        <div class="text-2xl">${p.emoji}</div>
+        <div class="flex-1">
+          <p class="text-sm font-semibold">${p.name}</p>
+          <p class="text-teal-700 text-sm font-bold">${money(p.price * i.qty)}</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="qty-minus w-7 h-7 rounded-full bg-gray-100" data-id="${i.id}">-</button>
+          <span class="w-5 text-center text-sm">${i.qty}</span>
+          <button class="qty-plus w-7 h-7 rounded-full bg-gray-100" data-id="${i.id}">+</button>
+        </div>
+      </div>`;
+    }).join("");
+    box.querySelectorAll(".qty-minus").forEach(b => b.addEventListener("click", () => changeQty(+b.dataset.id, -1)));
+    box.querySelectorAll(".qty-plus").forEach(b => b.addEventListener("click", () => changeQty(+b.dataset.id, 1)));
+  }
+  const total = cart.reduce((s, i) => s + PRODUCTS.find(p => p.id === i.id).price * i.qty, 0);
+  document.getElementById("cartTotal").textContent = money(total);
+}
+
+function openCart() { renderCart(); document.getElementById("cartOverlay").classList.remove("hidden"); document.getElementById("cartDrawer").classList.remove("translate-x-full"); }
+function closeCart() { document.getElementById("cartOverlay").classList.add("hidden"); document.getElementById("cartDrawer").classList.add("translate-x-full"); }
+
+document.getElementById("cartBtn").addEventListener("click", openCart);
+document.getElementById("navCart").addEventListener("click", openCart);
+document.getElementById("cartClose").addEventListener("click", closeCart);
+document.getElementById("cartOverlay").addEventListener("click", closeCart);
+
+// ======= BUSCA =======
+document.getElementById("searchBtn").addEventListener("click", () => document.getElementById("searchBar").classList.toggle("hidden"));
+document.getElementById("navSearch").addEventListener("click", () => {
+  document.getElementById("searchBar").classList.remove("hidden");
+  document.getElementById("searchInput").focus();
+});
+document.getElementById("searchInput").addEventListener("input", (e) => { currentSearch = e.target.value; renderProducts(); });
+
+// ======= CHECKOUT WHATSAPP =======
+document.getElementById("checkoutBtn").addEventListener("click", () => {
+  if (cart.length === 0) return showToast("Seu carrinho está vazio.");
+  let msg = "Olá! Gostaria de fazer o seguinte pedido:%0A%0A";
+  let total = 0;
+  cart.forEach(i => {
+    const p = PRODUCTS.find(pr => pr.id === i.id);
+    total += p.price * i.qty;
+    msg += `• ${i.qty}x ${p.name} - ${money(p.price * i.qty)}%0A`;
+  });
+  msg += `%0A*Total: ${money(total)}*`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
+});
+document.getElementById("waFloat").href = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá! Quero saber mais sobre os produtos da Eduardo Psiqui.`;
+
+// ======= NEWSLETTER =======
+document.getElementById("newsletterForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  showToast("Em breve! Estamos preparando algo especial 🚀");
+  e.target.reset();
+});
+
+// ======= INIT =======
+renderCategoryChips();
+renderProducts();
+updateCartBadge();
+</script>
+</body>
+</html>
